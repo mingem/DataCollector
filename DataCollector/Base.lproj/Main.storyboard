@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data Collection!!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rdb-ra-8dQ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collect Data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rdb-ra-8dQ">
                                 <rect key="frame" x="32" y="44" width="144" height="43"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="43" id="nK7-S9-E31"/>
@@ -26,25 +26,44 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gmJ-iS-2t0">
-                                <rect key="frame" x="209" y="51" width="34" height="30"/>
+                                <rect key="frame" x="184" y="51" width="34" height="30"/>
                                 <state key="normal" title="Start"/>
+                                <connections>
+                                    <action selector="startRecording:" destination="BYZ-38-t0r" eventType="touchUpInside" id="seJ-17-cDj"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y3S-vL-6W8">
-                                <rect key="frame" x="300" y="51" width="69" height="30"/>
+                                <rect key="frame" x="276" y="51" width="69" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Download"/>
+                                <connections>
+                                    <action selector="download:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0Un-4P-RbH"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DNn-d2-bEt">
-                                <rect key="frame" x="251" y="51" width="32" height="30"/>
+                                <rect key="frame" x="231" y="51" width="32" height="30"/>
                                 <state key="normal" title="Stop"/>
+                                <connections>
+                                    <action selector="stopRecording:" destination="BYZ-38-t0r" eventType="touchUpInside" id="C6x-He-SMk"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dY7-1m-oBX" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="42" y="113" width="327" height="191"/>
+                                <rect key="frame" x="32" y="113" width="337" height="191"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D3H-au-Km2" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="44" y="342" width="327" height="213"/>
+                                <rect key="frame" x="20" y="331" width="180" height="224"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DxV-bm-XaL" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="221" y="331" width="173" height="224"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MVT-vI-Iq1">
+                                <rect key="frame" x="39" y="592" width="330" height="250"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
@@ -57,16 +76,21 @@
                             <constraint firstItem="gmJ-iS-2t0" firstAttribute="centerY" secondItem="rdb-ra-8dQ" secondAttribute="centerY" id="EBK-NH-igZ"/>
                             <constraint firstItem="rdb-ra-8dQ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="EkU-Hp-wwZ"/>
                             <constraint firstItem="rdb-ra-8dQ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="Mlc-bl-G8y"/>
-                            <constraint firstItem="DNn-d2-bEt" firstAttribute="leading" secondItem="gmJ-iS-2t0" secondAttribute="trailing" constant="8" id="NlK-o3-f4g"/>
+                            <constraint firstItem="DNn-d2-bEt" firstAttribute="leading" secondItem="gmJ-iS-2t0" secondAttribute="trailing" constant="13" id="NlK-o3-f4g"/>
                             <constraint firstItem="DNn-d2-bEt" firstAttribute="baseline" secondItem="gmJ-iS-2t0" secondAttribute="firstBaseline" id="cHP-ik-TAO"/>
                             <constraint firstItem="gmJ-iS-2t0" firstAttribute="baseline" secondItem="DNn-d2-bEt" secondAttribute="firstBaseline" id="dju-O3-C53"/>
-                            <constraint firstItem="gmJ-iS-2t0" firstAttribute="leading" secondItem="rdb-ra-8dQ" secondAttribute="trailing" constant="33" id="tct-UZ-8aC"/>
+                            <constraint firstItem="gmJ-iS-2t0" firstAttribute="leading" secondItem="rdb-ra-8dQ" secondAttribute="trailing" constant="8" id="tct-UZ-8aC"/>
                             <constraint firstItem="gmJ-iS-2t0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="7" id="znz-0G-EgL"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="accelerometerChart" destination="dY7-1m-oBX" id="Pka-Wn-aun"/>
                         <outlet property="barometerChart" destination="D3H-au-Km2" id="LWE-8b-p75"/>
+                        <outlet property="cameraView" destination="MVT-vI-Iq1" id="mW3-Xd-uOX"/>
+                        <outlet property="downloadButton" destination="y3S-vL-6W8" id="5Qj-rl-p6I"/>
+                        <outlet property="pressureChart" destination="DxV-bm-XaL" id="ogW-Mw-5wg"/>
+                        <outlet property="startRecordButton" destination="gmJ-iS-2t0" id="AXG-gr-wyL"/>
+                        <outlet property="stopRecordButton" destination="DNn-d2-bEt" id="dQR-dz-xIG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
