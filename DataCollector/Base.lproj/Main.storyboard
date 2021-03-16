@@ -48,22 +48,22 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dY7-1m-oBX" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="32" y="113" width="337" height="191"/>
+                                <rect key="frame" x="32" y="113" width="337" height="148"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D3H-au-Km2" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="20" y="331" width="180" height="224"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DxV-bm-XaL" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="221" y="331" width="173" height="224"/>
+                                <rect key="frame" x="20" y="269" width="180" height="163"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MVT-vI-Iq1">
-                                <rect key="frame" x="39" y="592" width="330" height="250"/>
+                                <rect key="frame" x="39" y="462" width="330" height="276"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DxV-bm-XaL" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="221" y="269" width="173" height="163"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>

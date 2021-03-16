@@ -8,8 +8,6 @@
 // Data streams:
 // Accelerometer (x,y,z,t)
 // Altimeter (relative altitude, pressure)
-// TODO: Add Camera
-// TODO: Implement download
 // * potential:
 // Ambient noise - AVAudioRecorder
 // Proximity sensor
@@ -21,7 +19,11 @@ import CoreMotion // accelerometer, barometer
 import Charts
 import AVFoundation // camera
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        UISaveVideoAtPathToSavedPhotosAlbum("output", nil, nil, nil)
+    }
+    
     // Properties
     @IBOutlet weak var startRecordButton: UIButton!
     @IBOutlet weak var stopRecordButton: UIButton!
@@ -40,7 +42,7 @@ class ViewController: UIViewController {
         stopDataCapture()
     }
     @IBAction func download(_ sender: Any) {
-        let downloadAlert = UIAlertController(title: "Download data?", message: "This will save csv files to your phone.", preferredStyle: .alert)
+        let downloadAlert = UIAlertController(title: "Download data?", message: "This will save the data to your phone.", preferredStyle: .alert)
 
         downloadAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
             self.downloadRecordedData()
@@ -52,6 +54,10 @@ class ViewController: UIViewController {
     
     let motionManager = CMMotionManager()
     let altimeter = CMAltimeter()
+    var captureSession = AVCaptureSession()
+    var sessionOutput = AVCapturePhotoOutput()
+    var movieOutput = AVCaptureMovieFileOutput()
+    var previewLayer = AVCaptureVideoPreviewLayer()
     
     // Data Containers
     var collectedAccelerationData: [[Double]] = []
@@ -67,10 +73,35 @@ class ViewController: UIViewController {
         downloadButton.isEnabled = false
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         // Setup camera
 
+        if let device = AVCaptureDevice.DiscoverySession.init(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera], mediaType: .video, position: .back).devices.first{
+            do {
+                let input = try AVCaptureDeviceInput(device: device)
+                if captureSession.canAddInput(input) {
+                    captureSession.addInput(input)
+                    // sessionOutput.outputSettings = [AVVideoCodecKey: AVVideoCodecType.jpeg]
+                    
+                    if captureSession.canAddOutput(sessionOutput)
+                    {
+                        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+                            previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                        previewLayer.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
+                        cameraView.layer.addSublayer(previewLayer)
+                        
+                        previewLayer.frame.size = self.cameraView.frame.size
+                        previewLayer.bounds = cameraView.frame
+                    }
+                    
+                    captureSession.addOutput(movieOutput)
+                }
+                
+            } catch {
+                print("error")
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -82,6 +113,13 @@ class ViewController: UIViewController {
         startRecordButton.isEnabled = false
         stopRecordButton.isEnabled = true
         downloadButton.isEnabled = false
+        
+        // Camera feed
+        captureSession.startRunning()
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let fileUrl = paths[0].appendingPathComponent("camera_output.mov")
+        try? FileManager.default.removeItem(at: fileUrl)
+        movieOutput.startRecording(to: fileUrl, recordingDelegate: self)
         
         // Reset previously recorded data if it exists
         // Clear all entries instead of reinitializing dataset?
@@ -210,6 +248,9 @@ class ViewController: UIViewController {
         stopRecordButton.isEnabled = false
         downloadButton.isEnabled = true
         
+        // Stop camera recording
+        self.movieOutput.stopRecording()
+        
         // Stop measurements
         motionManager.stopAccelerometerUpdates()
         altimeter.stopRelativeAltitudeUpdates()
@@ -220,6 +261,9 @@ class ViewController: UIViewController {
             let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             let accelUrl = documentsPath.appendingPathComponent("acceleration.csv")
             let altimeterUrl = documentsPath.appendingPathComponent("altimeter.csv")
+            
+            // Video
+            self.movieOutput.stopRecording()
             
             // Accelerometer
             var accelCSVText = "x,y,z,t\n"
