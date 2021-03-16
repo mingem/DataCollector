@@ -120,6 +120,8 @@ class ViewController: UIViewController {
         accelData.addDataSet(accel_z_data)
         accelerometerChart.data = accelData
         var accelCounter = 0 // running counter of x index on line chart
+        var plotCounter = 0
+        let plotFrequency = 10 // plot results every nth occurrence
         
         // Set up barometer datasets
         let rel_alt_data: LineChartDataSet = LineChartDataSet(entries: [ChartDataEntry](), label: "rel_alt")
@@ -147,17 +149,23 @@ class ViewController: UIViewController {
                 // Process x,y,z,t here
                 if(data != nil){
                     if let accel = data?.acceleration, let ts = data?.timestamp {
-                        accelCounter += 1
-                        // Save data
-                        self.collectedAccelerationData.append([accel.x, accel.y, accel.z, Double(ts)])
+                        plotCounter += 1
                         
-                        // Update chart
-                        self.accelerometerChart.data?.addEntry(ChartDataEntry(x: Double(accelCounter), y: accel.x), dataSetIndex: 0) // accel_x_data
-                        self.accelerometerChart.data?.addEntry(ChartDataEntry(x: Double(accelCounter), y: accel.y), dataSetIndex: 1) // accel_y_data
-                        self.accelerometerChart.data?.addEntry(ChartDataEntry(x: Double(accelCounter), y: accel.z), dataSetIndex: 2) // accel_z_data
+                        if (plotCounter >= plotFrequency) {
+                            accelCounter += 1
+                            plotCounter = 0 // reset
+                            
+                            // Save data
+                            self.collectedAccelerationData.append([accel.x, accel.y, accel.z, Double(ts)])
+                            
+                            // Update chart
+                            self.accelerometerChart.data?.addEntry(ChartDataEntry(x: Double(accelCounter), y: accel.x), dataSetIndex: 0) // accel_x_data
+                            self.accelerometerChart.data?.addEntry(ChartDataEntry(x: Double(accelCounter), y: accel.y), dataSetIndex: 1) // accel_y_data
+                            self.accelerometerChart.data?.addEntry(ChartDataEntry(x: Double(accelCounter), y: accel.z), dataSetIndex: 2) // accel_z_data
 
-                        self.accelerometerChart.notifyDataSetChanged()
-                        self.accelerometerChart.updateFocusIfNeeded()
+                            self.accelerometerChart.notifyDataSetChanged()
+                            self.accelerometerChart.updateFocusIfNeeded()
+                        }
                     }
                 }
             }
